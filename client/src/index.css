@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.dm-sans-font {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.dm-sans-font-bold {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 1000;
+  font-style: normal;
+}
+
+
+@layer components {
+  /*----------------- Navbar ------------------*/
+  
+  .header {
+    @apply  bg-white
+  }
+  .nav {
+    @apply max-w-7xl mx-auto py-3
+  }
+  .nav-link {
+    @apply flex justify-center items-center gap-4
+  }
+
+  .nav-link li {
+    @apply hover:text-purple-500  hover:scale-110 duration-300 
+  }
+
+  .selection-card {
+    @apply bg-blue-400 rounded-md py-5 px-3 flex flex-col justify-center items-center shadow-md hover:scale-105 hover:bg-blue-600 duration-300
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center
+  }
+
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+@media (min-width: 1920px) {
+  .bgscreen {
+      height: 100vh;
+  }
+}
