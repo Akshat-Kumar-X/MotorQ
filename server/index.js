@@ -181,14 +181,29 @@ app.put('/api/update-appointment-status', async (req, res) => {
   }
 
   try {
-    const appointment = await AppointmentModel.findByIdAndUpdate(
-      appointmentId,
-      { status },
-      { new: true }
-    );
+    // Find the appointment to be updated
+    const appointment = await AppointmentModel.findById(appointmentId);
+
     if (!appointment) {
       return res.status(404).json({ message: 'Appointment not found' });
     }
+
+    if (!appointment.isActive && status === 'accepted') {
+      return res.status(400).json({ message: 'This appointment is no longer active' });
+    }
+
+    // If the appointment is accepted, invalidate all other pending appointments for the same student
+    if (status === 'accepted') {
+      await AppointmentModel.updateMany(
+        { studentId: appointment.studentId, status: 'pending', isActive: true },
+        { status: 'invalid', isActive: false }
+      );
+    }
+
+    // Update the status of the current appointment
+    appointment.status = status;
+    appointment.isActive = (status === 'accepted'); // Only the accepted appointment remains active
+    await appointment.save();
 
     res.status(200).json(appointment);
   } catch (error) {
