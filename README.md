@@ -60,7 +60,8 @@ Access the application:
 Open your web browser and navigate to http://localhost:3000.
 ## Preview
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/63cdf34c-3c2d-4d96-bdb6-d776e76ea254)
+
 
 ## Installation
 
