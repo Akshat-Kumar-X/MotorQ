@@ -6,6 +6,7 @@ import defaultImage from "/assets/profile.jpg";
 
 const AllCars = () => {
   const [cars, setCars] = useState([]);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchCars = async () => {

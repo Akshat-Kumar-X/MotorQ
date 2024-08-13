@@ -6,6 +6,7 @@ import BASE_URL from "../constants";
 const MyRentals = () => {
   const [rentedCars, setRentedCars] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchRentedCars = async () => {

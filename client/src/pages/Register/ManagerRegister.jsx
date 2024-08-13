@@ -10,7 +10,7 @@ const ManagerRegister = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     const loadingToast = toast.loading("Signing up...");

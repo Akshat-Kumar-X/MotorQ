@@ -8,7 +8,8 @@ const CarRegister = () => {
   const [type, setType] = useState("");
   const [plateNo, setPlateNo] = useState(""); // Added plateNo state
   const [image, setImage] = useState(null);
-
+  axios.defaults.withCredentials = true;
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();

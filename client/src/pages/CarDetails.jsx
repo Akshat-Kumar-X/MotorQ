@@ -10,6 +10,7 @@ const CarDetails = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [isRenting, setIsRenting] = useState(false);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchCarDetails = async () => {

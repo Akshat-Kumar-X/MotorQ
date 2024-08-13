@@ -4,6 +4,7 @@ import BASE_URL from "../constants";
 
 const AvailableCars = () => {
   const [availableCars, setAvailableCars] = useState([]);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchAvailableCars = async () => {

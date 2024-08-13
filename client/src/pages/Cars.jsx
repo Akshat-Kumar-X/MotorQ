@@ -5,6 +5,7 @@ import BASE_URL from "../constants";
 
 const Cars = () => {
   const [cars, setCars] = useState([]);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -36,7 +37,7 @@ const Cars = () => {
             />
           ))
         ) : (
-          <p className="text-center text-xl">No cars available</p>
+          <p className="text-center text-xl">Loading...</p>
         )}
       </div>
     </div>
