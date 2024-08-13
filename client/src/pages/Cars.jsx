@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import CarsCard from '../components/CarsCard';
-import axios from 'axios';
-import BASE_URL from '../constants';
+import React, { useEffect, useState } from "react";
+import CarsCard from "../components/CarsCard";
+import axios from "axios";
+import BASE_URL from "../constants";
 
 const Cars = () => {
   const [cars, setCars] = useState([]);
@@ -12,7 +12,7 @@ const Cars = () => {
         const response = await axios.get(`${BASE_URL}/api/cars`);
         setCars(response.data);
       } catch (error) {
-        console.error('Error fetching cars:', error);
+        console.error("Error fetching cars:", error);
       }
     };
 
@@ -27,12 +27,12 @@ const Cars = () => {
           cars.map((car) => (
             <CarsCard
               key={car._id}
-              _id={car._id}  // Pass the car ID here
+              _id={car._id} // Pass the car ID here
               name={car.name}
               type={car.type}
               image={car.image}
               plateNo={car.plateNo}
-              isRented={car.isRented}  // Pass the isRented status
+              isRented={car.isRented} // Pass the isRented status
             />
           ))
         ) : (

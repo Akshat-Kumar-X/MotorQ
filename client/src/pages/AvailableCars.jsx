@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import BASE_URL from '../constants';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BASE_URL from "../constants";
 
 const AvailableCars = () => {
   const [availableCars, setAvailableCars] = useState([]);
@@ -13,12 +13,12 @@ const AvailableCars = () => {
         const allCars = response.data;
 
         // Filter to get only available cars (not rented)
-        const filteredCars = allCars.filter(car => !car.isRented);
+        const filteredCars = allCars.filter((car) => !car.isRented);
 
         // Set available cars in state
         setAvailableCars(filteredCars);
       } catch (error) {
-        console.error('Error fetching available cars:', error);
+        console.error("Error fetching available cars:", error);
       }
     };
 
@@ -32,7 +32,7 @@ const AvailableCars = () => {
         {availableCars.length === 0 ? (
           <p className="text-center text-xl">No available cars found.</p>
         ) : (
-          availableCars.map(car => (
+          availableCars.map((car) => (
             <div key={car._id} className="border p-4 rounded-lg shadow">
               <img
                 src={car.image}
