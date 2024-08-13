@@ -16,7 +16,7 @@ const Footer = () => {
           <div className="md:pe-10 md:pb-2 pb-5 pt-3   flex flex-row gap-10 relative">
             <div >
               <img src="/logo.png" alt="Logo" className='w-36' />
-              <p className='text-[#494954] font-medium ps-3 text-lg hidden md:block'>Get Best Teachers Near you</p>
+              <p className='text-[#494954] font-medium ps-3 text-lg hidden md:block'>Data is Power</p>
               <div className="flex items-center text-[#292941] font-medium ps-3 pt-2 text-sm gap-2">
                 <MdOutlineEmail />
                 <p>akshat.kumar1077@gmail.com</p>
@@ -45,7 +45,7 @@ const Footer = () => {
               <h3 className="flex items-center text-2xl gap-2">Main Links <span className="text-[#5f5e75] font-xm text-3xl">⟶</span></h3>
               <a href='/#hero'>Home</a>
               <a href='/#about'>About</a>
-              <a href='/find-teachers'>Teachers</a>
+              <a href='/find-teachers'>Drivers</a>
               <a href='/selection' className="max-md:hidden">Get Started</a>
             </div>
             <div className=" h-[3px] my-2    pointer-events-none bg-gradient-to-r from-transparent via-[#E7E7E9]  to-transparent"></div>
@@ -54,7 +54,7 @@ const Footer = () => {
               <h3 className="flex items-center text-2xl gap-2">Explore <span className="text-[#5f5e75]  font-xm text-3xl">⟶</span></h3>
               <a href='/#hero'>Landing</a>
               <a href='/#about'>Know More</a>
-              <a href='/find-teachers'>Courses</a>
+              <a href='/cars'>Cars</a>
               <a href='/selection' className="max-md:hidden">Login</a>
             </div>
             

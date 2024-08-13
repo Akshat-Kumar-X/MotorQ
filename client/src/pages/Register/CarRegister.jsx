@@ -6,6 +6,7 @@ import BASE_URL from '../../constants'; // Update with your actual constants
 const CarRegister = () => {
   const [name, setName] = useState('');
   const [type, setType] = useState('');
+  const [plateNo, setPlateNo] = useState(''); // Added plateNo state
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
@@ -30,6 +31,7 @@ const CarRegister = () => {
       await axios.post(`${BASE_URL}/api/cars/register`, {
         name,
         type,
+        plateNo, // Include plateNo in the request
         image,
       });
 
@@ -37,6 +39,7 @@ const CarRegister = () => {
       toast.success('Car registered successfully!');
       setName('');
       setType('');
+      setPlateNo(''); // Clear plateNo input after successful registration
       setImage(null);
     } catch (err) {
       toast.dismiss(loadingToast);
@@ -68,6 +71,17 @@ const CarRegister = () => {
             placeholder="Enter car type"
             value={type}
             onChange={(e) => setType(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Plate Number</label>
+          <input
+            type="text"
+            className="w-full p-2 border rounded"
+            placeholder="Enter plate number"
+            value={plateNo}
+            onChange={(e) => setPlateNo(e.target.value)}
             required
           />
         </div>

@@ -150,5 +150,25 @@ router.get('/cars', async (req, res) => {
     }
   });
   
+  // Route to fetch available cars (not rented)
+
+// routes/carRoutes.js
+
+router.get('/available', async (req, res) => {
+    try {
+      // Find all cars where isRented is false (i.e., available)
+      const availableCars = await Car.find({ isRented: false });
+      res.status(200).json(availableCars);
+    } catch (err) {
+      console.error('Error fetching available cars:', err);
+      res.status(500).json({ message: 'Server error', error: err.message });
+    }
+  });
+  
+  
+  
+  
+  
+  
 
 export default router;

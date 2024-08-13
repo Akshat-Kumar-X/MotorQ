@@ -15,6 +15,10 @@ import DriverProfile from './pages/DriverProfile';
 import Appointments from './pages/Appointments';
 import CarRegister from './pages/Register/CarRegister';
 import Cars from './pages/Cars';
+import CarDetails from './pages/CarDetails';
+import MyRentals from './pages/MyRentals';
+import AllCars from './pages/AllCars';
+import AvailableCars from './pages/AvailableCars';
 
 const App = () => {
   return (
@@ -68,6 +72,19 @@ const App = () => {
             <Route path='/' element={<Home />} />
             <Route path='/register-car' element={<CarRegister />} />
             <Route path='/cars' element={<Cars />} />
+            <Route path="/cars/:id" element={<CarDetails />} />
+            <Route path="/all-cars" element={<AllCars />} />
+            <Route path="/available-cars" element={<AvailableCars/>} />
+            <Route
+              path='/my-rentals'
+              element={
+                <AuthContext.Consumer>
+                  {({ isAuthenticated }) =>
+                    isAuthenticated ? <MyRentals /> : <Navigate to='/' />
+                  }
+                </AuthContext.Consumer>
+              }
+            />
             <Route path='/profile' element={
               <AuthContext.Consumer>
                 {({ isAuthenticated }) =>

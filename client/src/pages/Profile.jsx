@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useDropzone } from 'react-dropzone';
@@ -21,7 +21,6 @@ const Profile = () => {
   const [contact, setContact] = useState(user?.contact || '');
   const [image, setImage] = useState(user?.image || '');
   const [description, setDescription] = useState(user?.description);
-  const [imageFile, setImageFile] = useState(null);
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -30,7 +29,6 @@ const Profile = () => {
       setImage(reader.result);
     };
     reader.readAsDataURL(file);
-    setImageFile(file);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -102,7 +100,6 @@ const Profile = () => {
               placeholder="Description"
             />
           </div>
-
         </div>
         <div className='flex-1 flex flex-col w-full mx-auto mt-4 px-2 gap-5'>
           <h2 className='lg:ps-6 text-2xl font-medium text-[#353452] mb-1'>Details</h2>
@@ -180,8 +177,8 @@ const Profile = () => {
           Update Details
         </button>
       </div>
-
     </form>
+    
   );
 };
 

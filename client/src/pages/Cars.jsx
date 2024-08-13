@@ -1,5 +1,3 @@
-// pages/Cars.jsx
-
 import React, { useEffect, useState } from 'react';
 import CarsCard from '../components/CarsCard';
 import axios from 'axios';
@@ -29,9 +27,12 @@ const Cars = () => {
           cars.map((car) => (
             <CarsCard
               key={car._id}
+              _id={car._id}  // Pass the car ID here
               name={car.name}
               type={car.type}
               image={car.image}
+              plateNo={car.plateNo}
+              isRented={car.isRented}  // Pass the isRented status
             />
           ))
         ) : (

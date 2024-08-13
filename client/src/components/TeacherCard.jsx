@@ -10,9 +10,9 @@ const TeacherCard = ({ id, name, subject, experience, location, image, descripti
  
   return (
     <Link to={`/teacher-profile/${id}`}>
-    <div className='max-md:pb-4 md:rounded-2xl rounded-xl shadow-lg hover:scale-105 duration-300 bg-white md:p-5'>
+    <div className='max-md:pb-4 md:rounded-2xl rounded-xl shadow-lg hover:scale-105 duration-300 bg-white md:p-3  '>
       <div className="flex max-md:pb-5 max-md:shadow  gap-8 justify-start items-center max-md:p-4 max-md:bg-slate-100 max-md:rounded-t-xl relative">
-        <img src={profileImage} alt="Profile" className='md:h-32 md:w-32 h-28 w-28 object-cover rounded-full shadow-xl ' />
+        <img src={profileImage} alt="Profile" className='md:h-20 md:w-20 h-16 w-16 object-cover rounded-full shadow-xl ' />
         <div className='flex flex-col md:gap-1'>
           <p className="text-sm text-gray-500 md:hidden ps-1">Name: </p>
           <h1 className='text-3xl font-medium text-[#353452]  '>{name}</h1>
@@ -21,9 +21,7 @@ const TeacherCard = ({ id, name, subject, experience, location, image, descripti
           </p>
           
         </div>
-        <div className='absolute right-[-30px] md:top-[70px] bg-blue-400 px-5 py-2 rounded-lg md:flex-center hidden text-white font-semibold gap-1'>
-          View Profile <FaAngleRight />
-        </div>
+        
       </div>
       <hr className="md:mb-2 mb-5 md:mt-5 " />
         <div className="flex justify-center md:hidden  gap-3">

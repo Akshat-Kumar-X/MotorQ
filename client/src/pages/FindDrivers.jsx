@@ -12,6 +12,7 @@ const FindDrivers = () => {
   const [searchName, setSearchName] = useState('');
   const [searchCity, setSearchCity] = useState('');
   const [searchState, setSearchState] = useState('');
+  const [searchContact, setSearchContact] = useState('');
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
@@ -28,11 +29,13 @@ const FindDrivers = () => {
   }, []);
 
   const filterDrivers = () => {
-    return drivers.filter(teacher => {
-      const nameMatch = teacher.name.toLowerCase().includes(searchName.toLowerCase());
-      const locationMatch = teacher.location.toLowerCase().includes(searchCity.toLowerCase()) &&
-                            teacher.location.toLowerCase().includes(searchState.toLowerCase());
-      return nameMatch && locationMatch;
+    return drivers.filter(driver => {
+      const nameMatch = driver.name.toLowerCase().includes(searchName.toLowerCase());
+      const locationMatch = driver.location.toLowerCase().includes(searchCity.toLowerCase()) &&
+                            driver.location.toLowerCase().includes(searchState.toLowerCase());
+      const contactMatch = driver.contact && driver.contact.includes(searchContact);
+
+      return nameMatch && locationMatch && contactMatch;
     });
   };
 
@@ -149,9 +152,10 @@ const FindDrivers = () => {
                 /> 
                 <button className=' h-full px-4 bg-gradient-to-r text-xl  text-white from-fuchsia-400 to-purple-400'><FaLocationDot /></button>
               </div>
+              
               <h2 className='mt-4 text-xl font-medium text-[#353452]  text-center  md:hidden flex items-center gap-2'> 
                 <IoFilter /> Search by 
-                <span className='bg-gradient-to-r from-yellow-300  to-orange-400 i text-transparent bg-clip-text'>Name</span>
+                <span className='bg-gradient-to-r from-yellow-300  to-orange-400 i text-transparent bg-clip-text'>Contact</span>
               </h2>
               <div className=" relative md:hidden flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border border-1 shadow-lg ">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -163,19 +167,18 @@ const FindDrivers = () => {
                 <input
                   className="peer h-full w-full outline-none text-gray-700 pr-2 text-md ps-2"
                   type="text"
-                  placeholder='Enter Name..' 
-                  value={searchName}
-                  onChange={(e) => setSearchName(e.target.value)}
+                  placeholder='Enter Contact..' 
+                  value={searchContact}
+                  onChange={(e) => setSearchContact(e.target.value)}
                 /> 
                 <button className=' h-full px-4 bg-gradient-to-r text-xl  text-white from-fuchsia-400 to-purple-400'><FaLocationDot /></button>
               </div>
             </div>
             <div className='bg-white border rounded-lg px-8 py-8 md:flex flex-col gap-3 flex-2 hidden'>
-              <h2 className='text-3xl font-medium text-[#353452]  text-center  flex items-center gap-2'> 
+            <h2 className='text-3xl font-medium text-[#353452]  text-center  flex items-center gap-2'> 
                 <IoFilter /> Search by 
                 <span className='bg-gradient-to-r from-yellow-300  to-orange-400 i text-transparent bg-clip-text'>Name</span>
               </h2>
-              <p className='text-gray-500 font-medium mb-3'>Search by Driver Name</p>
               <div className="relative  flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border border-1 shadow-lg ">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -192,6 +195,10 @@ const FindDrivers = () => {
                 /> 
                 <button className=' h-full px-4 bg-gradient-to-r text-xl  text-white from-fuchsia-400 to-purple-400'><FaLocationDot /></button>
               </div>
+              <h2 className='text-3xl mt-5 font-medium text-[#353452]  text-center  flex items-center gap-2'> 
+                <IoFilter /> Search by 
+                <span className='bg-gradient-to-r from-yellow-300  to-orange-400 i text-transparent bg-clip-text'>Contact</span>
+              </h2>
               <div className="relative  flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border border-1 shadow-lg ">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,25 +209,25 @@ const FindDrivers = () => {
                 <input
                   className="peer h-full w-full outline-none text-gray-700 pr-2 text-md ps-2"
                   type="text"
-                  placeholder='Enter Name..' 
-                  value={searchName}
-                  onChange={(e) => setSearchName(e.target.value)}
+                  placeholder='Enter Contact..' 
+                  value={searchContact}
+                  onChange={(e) => setSearchContact(e.target.value)}
                 /> 
                 <button className=' h-full px-4 bg-gradient-to-r text-xl  text-white from-fuchsia-400 to-purple-400'><FaLocationDot /></button>
               </div>
             </div>
           </div>
           <div className='flex flex-col gap-8 flex-1 max-md:mt-5'>
-            {filteredDrivers.length === 0 ? (<div className='text-[#353452] text-3xl font-semibold mt-20 flex-center'>Loading...</div>) : (<></>)}{
-            filteredDrivers.map((teacher) => (
+            {filteredDrivers.length === 0 ? (<div className='text-[#353452] text-3xl font-semibold mt-20 flex-center'>No drivers found</div>) : (<></>)}{
+            filteredDrivers.map((driver) => (
               <TeacherCard
-                key={teacher._id}
-                id={teacher._id}
-                name={teacher.name}
-                experience={teacher.experience}
-                location={teacher.location}
-                description={teacher.description}
-                image={teacher.image}
+                key={driver._id}
+                id={driver._id}
+                name={driver.name}
+                experience={driver.experience}
+                location={driver.location}
+                description={driver.description}
+                image={driver.image}
               />
             ))}
           </div>

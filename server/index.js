@@ -8,6 +8,7 @@ import DriverModel from './models/Driver.model.js';
 import StudentModel from './models/Student.model.js';
 import AppointmentModel from './models/Appointment.model.js';
 import carRoutes from './routes/carRoutes.js';
+import driverRoutes from './routes/driverRoutes.js'
 dotenv.config();
 //   https://edumate-tutor.vercel.app
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors({
 }));
 
 app.use('/api/cars', carRoutes);
+app.use('/api', driverRoutes);
 
 const connectToDatabase = async () => {
   try {
@@ -138,13 +140,20 @@ app.post('/api/student-login', async (req, res) => {
 
 // Schedule appointment endpoint
 app.post('/api/appointments', async (req, res) => {
-  const { studentId, teacherId, date, time } = req.body;
+  const { studentId, teacherId, startDate, endDate, vehicleId } = req.body;
   try {
+    if (!studentId || !teacherId || !startDate || !endDate || !vehicleId) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
     const appointment = await AppointmentModel.create({
       studentId,
       teacherId,
-      date,
-      time
+      startDate,
+      endDate,
+      vehicleId,
+      status: 'pending',
+      isActive: true
     });
     res.status(201).json(appointment);
   } catch (error) {
@@ -158,59 +167,73 @@ app.get('/api/my-appointments', async (req, res) => {
   try {
     let appointments;
     if (studentId) {
-      appointments = await AppointmentModel.find({ studentId }).populate('teacherId');
+      appointments = await AppointmentModel.find({ studentId })
+        .populate('teacherId')
+        .populate('vehicleId'); // Populate vehicle details
     } else if (teacherId) {
-      appointments = await AppointmentModel.find({ teacherId }).populate('studentId');
+      appointments = await AppointmentModel.find({ teacherId })
+        .populate('studentId')
+        .populate('vehicleId'); // Populate vehicle details
     } else {
       return res.status(400).json({ message: 'Student ID or Teacher ID is required' });
     }
 
-    console.log('Fetched appointments:', appointments);  // Log fetched appointments
     res.status(200).json(appointments);
   } catch (error) {
-    console.error('Error fetching appointments:', error.message);  // Log error details
+    console.error('Error fetching appointments:', error.message);
     res.status(500).json({ message: 'Could not fetch appointments', error: error.message });
   }
 });
+
 
 app.put('/api/update-appointment-status', async (req, res) => {
   const { appointmentId, status } = req.body;
 
   if (!appointmentId || !status) {
-    return res.status(400).json({ message: 'Appointment ID and status are required' });
+      return res.status(400).json({ message: 'Appointment ID and status are required' });
   }
 
   try {
-    // Find the appointment to be updated
-    const appointment = await AppointmentModel.findById(appointmentId);
+      // Find the appointment to be updated
+      const appointment = await AppointmentModel.findById(appointmentId).populate('vehicleId');
 
-    if (!appointment) {
-      return res.status(404).json({ message: 'Appointment not found' });
-    }
+      if (!appointment) {
+          return res.status(404).json({ message: 'Appointment not found' });
+      }
 
-    if (!appointment.isActive && status === 'accepted') {
-      return res.status(400).json({ message: 'This appointment is no longer active' });
-    }
+      if (!appointment.isActive && status === 'accepted') {
+          return res.status(400).json({ message: 'This appointment is no longer active' });
+      }
 
-    // If the appointment is accepted, invalidate all other pending appointments for the same student
-    if (status === 'accepted') {
-      await AppointmentModel.updateMany(
-        { studentId: appointment.studentId, status: 'pending', isActive: true },
-        { status: 'invalid', isActive: false }
-      );
-    }
+      // If the appointment is accepted, invalidate all other pending appointments for the same student
+      if (status === 'accepted') {
+          await AppointmentModel.updateMany(
+              { studentId: appointment.studentId, status: 'pending', isActive: true },
+              { status: 'inActive', isActive: false }
+          );
 
-    // Update the status of the current appointment
-    appointment.status = status;
-    appointment.isActive = (status === 'accepted'); // Only the accepted appointment remains active
-    await appointment.save();
+          // Mark the car as rented
+          const vehicle = appointment.vehicleId;
+          vehicle.isRented = true;
+          vehicle.rentedBy = appointment.teacherId;
+          vehicle.rentStartTime = appointment.startDate;
+          vehicle.rentEndTime = appointment.endDate;
+          await vehicle.save();
+      }
 
-    res.status(200).json(appointment);
+      // Update the status of the current appointment
+      appointment.status = status;
+      appointment.isActive = (status === 'accepted'); // Only the accepted appointment remains active
+      await appointment.save();
+
+      res.status(200).json(appointment);
   } catch (error) {
-    console.error('Error updating appointment status:', error.message);
-    res.status(500).json({ message: 'Could not update appointment status', error: error.message });
+      console.error('Error updating appointment status:', error.message);
+      res.status(500).json({ message: 'Could not update appointment status', error: error.message });
   }
 });
+
+
 
 app.get('/api/teachers', async (req, res) => {
   try {

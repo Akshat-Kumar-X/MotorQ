@@ -48,7 +48,7 @@ const StudentLogin = () => {
               <div className='flex flex-col w-full bg-white p-10 text-black rounded-md '>
                 <img src="/logo.png" alt="Logo" className='w-40 mb-5 ml-[-10px]' />
                 <h1 className='text-[#353452] text-5xl  font-semibold mb-5'>
-                  <span className='bg-gradient-to-r from-pink-400 to-rose-500 text-transparent bg-clip-text font-bold'>Student</span> Login
+                  <span className='bg-gradient-to-r from-pink-400 to-rose-500 text-transparent bg-clip-text font-bold'>Manager</span> Login
                 </h1>
                 <p className='mb-4 text-gray-500'>Connect With the Best Teachers Near You</p>
                 <form onSubmit={handleSubmit} className='flex flex-col '>
