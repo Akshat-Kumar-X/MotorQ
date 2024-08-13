@@ -42,7 +42,28 @@ const FindDrivers = () => {
       return nameMatch && locationMatch && contactMatch;
     });
   };
+  const handleSearch = async () => {
+    if (!location) {
+      setError('Please enter a location to search.');
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?q=${location}&format=json&limit=1`
+      );
 
+      if (response.data.length > 0) {
+        const { lat, lon } = response.data[0];
+        setPosition([parseFloat(lat), parseFloat(lon)]);
+        setError(''); // Clear any previous errors
+      } else {
+        setError('Location not found. Please try a different query.');
+      }
+    } catch (error) {
+      console.error('Error fetching location:', error);
+      setError('There was an error with the search. Please try again.');
+    }
+  };
   const filteredDrivers = filterDrivers();
 
   return (
@@ -312,6 +333,7 @@ const FindDrivers = () => {
               </div>
             </div>
           </div>
+          {/* Map Here */}
           <div className="flex flex-col gap-8 flex-1 max-md:mt-5">
             {filteredDrivers.length === 0 ? (
               <div className="text-[#353452] text-3xl font-semibold mt-20 flex-center">
@@ -320,17 +342,18 @@ const FindDrivers = () => {
             ) : (
               <></>
             )}
-            {filteredDrivers.map((driver) => (
-              <DriverCard
-                key={driver._id}
-                id={driver._id}
-                name={driver.name}
-                experience={driver.experience}
-                location={driver.location}
-                description={driver.description}
-                image={driver.image}
-              />
-            ))}
+          {filteredDrivers.map((driver) => (
+            <DriverCard
+              key={driver._id}
+              id={driver._id}
+              name={driver.name}
+              experience={driver.experience}
+              location={driver.location}
+              description={driver.description}
+              image={driver.image}
+            />
+          ))}
+
           </div>
         </div>
       </section>

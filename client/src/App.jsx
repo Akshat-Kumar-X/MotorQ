@@ -19,6 +19,7 @@ import CarDetails from "./pages/CarDetails";
 import MyRentals from "./pages/MyRentals";
 import AllCars from "./pages/AllCars";
 import AvailableCars from "./pages/AvailableCars";
+import MapSearch from "./pages/MapSearch";
 
 const App = () => {
   return (
@@ -79,6 +80,7 @@ const App = () => {
               <Route path="/cars/:id" element={<CarDetails />} />
               <Route path="/all-cars" element={<AllCars />} />
               <Route path="/available-cars" element={<AvailableCars />} />
+              <Route path="/map" element={<MapSearch />} />
               <Route
                 path="/my-rentals"
                 element={

@@ -13,6 +13,7 @@ import { LuUser2 } from "react-icons/lu";
 import { IoCarSportSharp } from "react-icons/io5";
 import { FaKey } from "react-icons/fa";
 import { MdNotes } from "react-icons/md";
+import { FaMap } from "react-icons/fa";
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -74,6 +75,16 @@ const Navbar = () => {
                 <Link to="/register-car" className="flex flex-col items-center">
                   <MdNotes className="text-2xl" />
                   Resiter Car
+                </Link>
+              </div>
+            ) : null}
+          </li>
+          <li>
+            {isAuthenticated && user && user.type === "manager" ? (
+              <div className="flex justify-center items-center gap-3">
+                <Link to="/map" className="flex flex-col items-center">
+                <FaMap  className="text-2xl" />
+                  Map
                 </Link>
               </div>
             ) : null}

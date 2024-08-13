@@ -10,12 +10,12 @@ import AppointmentModel from "./models/Appointment.model.js";
 import carRoutes from "./routes/carRoutes.js";
 import driverRoutes from "./routes/driverRoutes.js";
 dotenv.config();
-//   https://edumate-tutor.vercel.app http://localhost:5173
+//   https://edumate-tutor.vercel.app http://motor-q-app.vercel.app
 const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(
   cors({
-    origin: "http://motor-q-app.vercel.app",
+    origin: "http://localhost:5173",
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
